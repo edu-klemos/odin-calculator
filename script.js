@@ -28,14 +28,37 @@ function operate(operator, firstNumber, secondNumber) {
 
 function updateDisplay() {
     const display = document.querySelector('.display');
-    display.textContent = firstNumber + operator + secondNumber
+    display.textContent = `${firstNumber} ${operator} ${secondNumber}`
 }
 
 (function numberButtons() {
     const numbers = document.querySelectorAll("#number");
     numbers.forEach(number => number.addEventListener('click', event => {
-        firstNumber += event.target.textContent;
+        if(!operator) firstNumber += event.target.textContent;
+        else secondNumber += event.target.textContent;
         updateDisplay();
 
     }))
+})();
+
+(function operatorButtons() {
+    const operations = document.querySelectorAll("#operator");
+    operations.forEach(operation => operation.addEventListener('click', event => {
+        if (firstNumber) {
+            operator = event.target.textContent;
+            updateDisplay();
+        }
+    }))
+})();
+
+(function equalButton() {
+    const equal = document.querySelector('#equal')
+    equal.addEventListener('click', event => {
+        if (firstNumber && secondNumber && operator) {
+            firstNumber = operate(operator, Number(firstNumber), Number(secondNumber));
+            operator = ""
+            secondNumber = ""
+            updateDisplay();
+        }
+    })
 })();
