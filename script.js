@@ -31,10 +31,12 @@ function updateDisplay(content) {
     display.textContent = content;
 }
 
+function getDisplayContent() { return document.querySelector('.display').textContent };
+
 (function numberButtons() {
     const numbers = document.querySelectorAll("#number");
     numbers.forEach(number => number.addEventListener('click', event => {
-        if(!operator) firstNumber += event.target.textContent;
+        if (!operator) firstNumber += event.target.textContent;
         else secondNumber += event.target.textContent;
         updateDisplay(secondNumber || firstNumber);
 
@@ -49,19 +51,20 @@ function updateDisplay(content) {
             operator = ""
             secondNumber = ""
             updateDisplay(firstNumber);
-        } //the code inside this if must be a separate function
+        }
+        firstNumber = getDisplayContent();
         if (firstNumber) operator = event.target.textContent; 
     }))
 })();
 
 (function equalButton() {
     const equal = document.querySelector('#equal')
-    equal.addEventListener('click', event => {
+    equal.addEventListener('click', () => {
         if (firstNumber && secondNumber && operator) {
-            firstNumber = operate(operator, Number(firstNumber), Number(secondNumber));
+            updateDisplay(operate(operator, Number(firstNumber), Number(secondNumber)));
+            firstNumber = "";
             operator = ""
             secondNumber = ""
-            updateDisplay(firstNumber);
-        } //the code inside this if must be a separate function
+        }
     })
 })();
