@@ -81,6 +81,11 @@ function clearVariables() {
     secondNumber = "";
 }
 
+function clearEverything() {
+    clearVariables();
+    updateDisplay(0);
+}
+
 function updateDisplay(content) {
     const display = document.querySelector('.display');
     display.textContent = content;
@@ -121,3 +126,9 @@ function getDisplayContent() { return document.querySelector('.display').textCon
         }
     })
 })();
+
+(function clearButton() {
+    const clear = document.querySelector('#clear');
+    clear.addEventListener('click', clearEverything);
+})();
+
