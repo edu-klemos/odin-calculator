@@ -96,6 +96,18 @@ function updateDisplay(content) {
 
 function getDisplayContent() { return document.querySelector('.display').textContent };
 
+function backSpace() {
+    if (firstNumber && !secondNumber) {
+        firstNumber = firstNumber.slice(0, -1);
+        updateDisplay((firstNumber || 0));
+        operator = "";
+    }
+    if (secondNumber) {
+        secondNumber = (secondNumber.slice(0, -1) || '0');
+        updateDisplay(secondNumber);
+    }
+}
+
 (function numberButtons() {
     const numbers = document.querySelectorAll("#number");
     numbers.forEach(number => number.addEventListener('click', event => {
@@ -134,5 +146,10 @@ function getDisplayContent() { return document.querySelector('.display').textCon
 (function clearButton() {
     const clear = document.querySelector('#clear');
     clear.addEventListener('click', resetCalculator);
+})();
+
+(function backspaceButton() {
+    const backspaceButton = document.querySelector('#backspace');
+    backspaceButton.addEventListener('click', backSpace);
 })();
 
