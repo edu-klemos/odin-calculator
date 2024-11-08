@@ -44,6 +44,12 @@ function updateDisplay(content) {
 (function operatorButtons() {
     const operations = document.querySelectorAll("#operator");
     operations.forEach(operation => operation.addEventListener('click', event => {
+        if (firstNumber && secondNumber && operator) {
+            firstNumber = operate(operator, Number(firstNumber), Number(secondNumber));
+            operator = ""
+            secondNumber = ""
+            updateDisplay(firstNumber);
+        } //the code inside this if must be a separate function
         if (firstNumber) operator = event.target.textContent; 
     }))
 })();
@@ -56,6 +62,6 @@ function updateDisplay(content) {
             operator = ""
             secondNumber = ""
             updateDisplay(firstNumber);
-        }
+        } //the code inside this if must be a separate function
     })
 })();
