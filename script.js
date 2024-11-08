@@ -57,6 +57,7 @@ function verifyResult(result) {
 function stopCalculator(message) {
     const buttons = document.querySelectorAll("button");
     buttons.forEach(button => button.disabled = true);
+    document.querySelector('#clear').disabled = false;
     updateDisplay(message);
 }
 
@@ -65,7 +66,7 @@ function fixResultLength(result) {
     let integers = resultArray[0];
     let decimalsLength = MAX_LENGTH - (integers.length + 1); // +1 because of the char '.'
     let decimals = resizeDecimals(resultArray[1], decimalsLength);
-    return decimals? Number(integers.concat(".", decimals)) : Number(integers);
+    return decimals ? Number(integers.concat(".", decimals)) : Number(integers);
 
 }
 
@@ -81,9 +82,11 @@ function clearVariables() {
     secondNumber = "";
 }
 
-function clearEverything() {
+function resetCalculator() {
     clearVariables();
     updateDisplay(0);
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach(button => button.disabled = false); //calculator works after stopCalculator()
 }
 
 function updateDisplay(content) {
@@ -129,6 +132,6 @@ function getDisplayContent() { return document.querySelector('.display').textCon
 
 (function clearButton() {
     const clear = document.querySelector('#clear');
-    clear.addEventListener('click', clearEverything);
+    clear.addEventListener('click', resetCalculator);
 })();
 
