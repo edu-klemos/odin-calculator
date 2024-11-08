@@ -99,6 +99,7 @@ function getDisplayContent() { return document.querySelector('.display').textCon
 (function numberButtons() {
     const numbers = document.querySelectorAll("#number");
     numbers.forEach(number => number.addEventListener('click', event => {
+        if (firstNumber == false && event.target.textContent === '0') return; // firstNumber == false cause it can be "" or "0"
         if (!operator) {
             if (firstNumber.length < MAX_LENGTH) firstNumber += event.target.textContent;
         }
