@@ -26,9 +26,9 @@ function operate(operator, firstNumber, secondNumber) {
     }
 }
 
-function updateDisplay() {
+function updateDisplay(content) {
     const display = document.querySelector('.display');
-    display.textContent = `${firstNumber} ${operator} ${secondNumber}`
+    display.textContent = content;
 }
 
 (function numberButtons() {
@@ -36,7 +36,7 @@ function updateDisplay() {
     numbers.forEach(number => number.addEventListener('click', event => {
         if(!operator) firstNumber += event.target.textContent;
         else secondNumber += event.target.textContent;
-        updateDisplay();
+        updateDisplay(secondNumber || firstNumber);
 
     }))
 })();
@@ -44,10 +44,7 @@ function updateDisplay() {
 (function operatorButtons() {
     const operations = document.querySelectorAll("#operator");
     operations.forEach(operation => operation.addEventListener('click', event => {
-        if (firstNumber) {
-            operator = event.target.textContent;
-            updateDisplay();
-        }
+        if (firstNumber) operator = event.target.textContent; 
     }))
 })();
 
@@ -58,7 +55,7 @@ function updateDisplay() {
             firstNumber = operate(operator, Number(firstNumber), Number(secondNumber));
             operator = ""
             secondNumber = ""
-            updateDisplay();
+            updateDisplay(firstNumber);
         }
     })
 })();
