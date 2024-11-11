@@ -86,7 +86,7 @@ function resetCalculator() {
     clearVariables();
     updateDisplay(0);
     const buttons = document.querySelectorAll("button");
-    buttons.forEach(button => button.disabled = false); //calculator works after stopCalculator()
+    buttons.forEach(button => button.disabled = false); //calculator will work again after stopCalculator()
 }
 
 function updateDisplay(content) {
@@ -103,15 +103,15 @@ function backSpace() {
         operator = "";
     }
     if (secondNumber) {
-        secondNumber = (secondNumber.slice(0, -1) || '0');
-        updateDisplay(secondNumber);
+        secondNumber = (secondNumber.slice(0, -1));
+        updateDisplay((secondNumber || 0));
     }
 }
 
 (function numberButtons() {
     const numbers = document.querySelectorAll("#number");
     numbers.forEach(number => number.addEventListener('click', event => {
-        if (firstNumber == false && event.target.textContent === '0') return; // firstNumber == false cause it can be "" or "0"
+        if (firstNumber == false && event.target.textContent === '0') return; // firstNumber == false because it can be falsy values "" or "0"
         if (!operator) {
             if (firstNumber.length < MAX_LENGTH) firstNumber += event.target.textContent;
         }
@@ -135,11 +135,26 @@ function backSpace() {
 })();
 
 (function equalButton() {
-    const equal = document.querySelector('#equal')
+    const equal = document.querySelector('#equal');
     equal.addEventListener('click', () => {
         if (firstNumber && secondNumber && operator) {
             calculate()
         }
+    })
+})();
+
+(function dotButton() {
+    const dot = document.querySelector('#dot');
+    dot.addEventListener('click', () => {
+        if (!operator) {
+            if(firstNumber == false) firstNumber = '0.';
+            else if (firstNumber.length < MAX_LENGTH && !firstNumber.includes('.')) firstNumber += '.';
+        }
+        else {
+            if(secondNumber == false) secondNumber = '0.';
+            else if (secondNumber.length < MAX_LENGTH && !secondNumber.includes('.')) secondNumber += '.';
+        }
+        updateDisplay(secondNumber || firstNumber);
     })
 })();
 
