@@ -96,66 +96,61 @@ function updateDisplay(content) {
 
 function getDisplayContent() { return document.querySelector('.display').textContent };
 
-function backSpace() {
-    if (firstNumber && !secondNumber) {
-        firstNumber = firstNumber.slice(0, -1);
-        updateDisplay((firstNumber || 0));
-        operator = "";
-    }
-    if (secondNumber) {
-        secondNumber = (secondNumber.slice(0, -1));
-        updateDisplay((secondNumber || 0));
-    }
+function numberInputHandler(textContent) {
+    if (firstNumber == false && textContent === '0') return; // firstNumber == false because it can be falsy values "" or "0"
+        if (!operator) {
+            if (firstNumber.length < MAX_LENGTH) firstNumber += textContent;
+        }
+        else {
+            if (secondNumber.length < MAX_LENGTH) secondNumber += textContent;
+        }
+        updateDisplay(secondNumber || firstNumber);
 }
 
 (function numberButtons() {
     const numbers = document.querySelectorAll("#number");
-    numbers.forEach(number => number.addEventListener('click', event => {
-        if (firstNumber == false && event.target.textContent === '0') return; // firstNumber == false because it can be falsy values "" or "0"
-        if (!operator) {
-            if (firstNumber.length < MAX_LENGTH) firstNumber += event.target.textContent;
-        }
-        else {
-            if (secondNumber.length < MAX_LENGTH) secondNumber += event.target.textContent;
-        }
-        updateDisplay(secondNumber || firstNumber);
-
-    }))
+    numbers.forEach(number => number.addEventListener('click', event => numberInputHandler(event.target.textContent)))
 })();
+
+function operatorInputHandler(textContent) {
+    if (firstNumber && secondNumber && operator) {
+        calculate();
+    }
+    firstNumber = getDisplayContent();
+    operator = textContent; 
+}
 
 (function operatorButtons() {
     const operations = document.querySelectorAll("#operator");
-    operations.forEach(operation => operation.addEventListener('click', event => {
-        if (firstNumber && secondNumber && operator) {
-            calculate();
-        }
-        firstNumber = getDisplayContent();
-        if (firstNumber) operator = event.target.textContent; 
-    }))
+    operations.forEach(operation => operation.addEventListener('click', event => operatorInputHandler(event.target.textContent)))
 })();
+
+function equalInputHandler() {
+    if (firstNumber && secondNumber && operator) {
+        calculate()
+    }
+}
 
 (function equalButton() {
     const equal = document.querySelector('#equal');
-    equal.addEventListener('click', () => {
-        if (firstNumber && secondNumber && operator) {
-            calculate()
-        }
-    })
+    equal.addEventListener('click', equalInputHandler);
 })();
+
+function dotInputHandler() {
+    if (!operator) {
+        if(firstNumber == false) firstNumber = '0.';
+        else if (firstNumber.length < MAX_LENGTH && !firstNumber.includes('.')) firstNumber += '.';
+    }
+    else {
+        if(secondNumber == false) secondNumber = '0.';
+        else if (secondNumber.length < MAX_LENGTH && !secondNumber.includes('.')) secondNumber += '.';
+    }
+    updateDisplay(secondNumber || firstNumber);
+}
 
 (function dotButton() {
     const dot = document.querySelector('#dot');
-    dot.addEventListener('click', () => {
-        if (!operator) {
-            if(firstNumber == false) firstNumber = '0.';
-            else if (firstNumber.length < MAX_LENGTH && !firstNumber.includes('.')) firstNumber += '.';
-        }
-        else {
-            if(secondNumber == false) secondNumber = '0.';
-            else if (secondNumber.length < MAX_LENGTH && !secondNumber.includes('.')) secondNumber += '.';
-        }
-        updateDisplay(secondNumber || firstNumber);
-    })
+    dot.addEventListener('click', dotInputHandler);
 })();
 
 (function clearButton() {
@@ -163,8 +158,51 @@ function backSpace() {
     clear.addEventListener('click', resetCalculator);
 })();
 
+function backspaceInputHandler() {
+    if (secondNumber) {
+        secondNumber = (secondNumber.slice(0, -1));
+        updateDisplay((secondNumber || 0));
+    }
+    else if (operator) {
+        operator = "";
+        updateDisplay(firstNumber);
+    }
+    else if (firstNumber) {
+        firstNumber = firstNumber.slice(0, -1);
+        updateDisplay((firstNumber || 0));
+        
+    }
+}
+
 (function backspaceButton() {
     const backspaceButton = document.querySelector('#backspace');
-    backspaceButton.addEventListener('click', backSpace);
+    backspaceButton.addEventListener('click', backspaceInputHandler);
 })();
 
+// Keyboard events
+// document.addEventListener('keyup', event => {
+//     let key = event.key;
+//     switch (key) {
+//         case 'Escape':
+//             document.querySelector('#clear').dispatchEvent(clickEvent);
+//             break;
+
+//         case 'Backspace':
+//             backSpace();
+//             break;
+
+//         case '.':
+//             break;
+
+//         case '+':
+//             break;  
+
+//         case '-':
+//             break;
+
+//         case '=':
+//             break;
+        
+                  
+//     }
+// });
