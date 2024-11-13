@@ -84,6 +84,7 @@ function resizeDecimals(decimals, decimalsLength) {
 function clearVariables() {
     firstNumber = "";
     operator = "";
+    highlightOperatorButton()
     secondNumber = "";
 }
 
@@ -117,18 +118,24 @@ function numberInputHandler(textContent) {
     numbers.forEach(number => number.addEventListener('click', event => numberInputHandler(event.target.textContent)))
 })();
 
-function operatorInputHandler(textContent) {
+function operatorInputHandler(textContent, id) {
     if (firstNumber && secondNumber && operator) {
         calculate();
     }
     firstNumber = getDisplayContent();
     operator = textContent;
+    highlightOperatorButton(id);
 }
 
 (function operatorButtons() {
-    const operations = document.querySelectorAll("#operator");
-    operations.forEach(operation => operation.addEventListener('click', event => operatorInputHandler(event.target.textContent)))
+    const operations = document.querySelectorAll(".operator");
+    operations.forEach(operation => operation.addEventListener('click', event => operatorInputHandler(event.target.textContent, event.target.id)))
 })();
+
+function highlightOperatorButton(id = "") {
+    if (document.querySelector('.operator-in-use')) document.querySelector('.operator-in-use').classList.remove('operator-in-use');
+    if (id) document.querySelector(`#${id}`).classList.add('operator-in-use');
+}
 
 function equalInputHandler() {
     if (firstNumber && secondNumber && operator) {
@@ -170,6 +177,7 @@ function backspaceInputHandler() {
     }
     else if (operator) {
         operator = "";
+        highlightOperatorButton()
         updateDisplay(firstNumber);
     }
     else if (firstNumber) {
@@ -205,19 +213,19 @@ document.addEventListener('keydown', event => {
                 break;
     
             case '+':
-                operatorInputHandler("+");
+                operatorInputHandler("+", "sum");
                 break;  
     
             case '-':
-                operatorInputHandler("-");
+                operatorInputHandler("-", "minus");
                 break;
     
             case '*':
-                operatorInputHandler("x");
+                operatorInputHandler("x", "multiplication");
                 break;  
     
             case '/':
-                operatorInputHandler("÷");
+                operatorInputHandler("÷", "division");
                 break;
     
             case 'Enter':

@@ -69,8 +69,12 @@ button:active {
   box-shadow: 0 0.1em .5em #6390FA, 0 -0.1em .5em #CA5880;
 }
 
-#operator {
+.operator {
   color:#CA5880;
+}
+
+.operator-in-use {
+  box-shadow: 0 0.1em .5em #6390FA, 0 -0.1em .5em #CA5880;
 }
 
 #equal, #clear {
