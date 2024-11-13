@@ -108,7 +108,7 @@ function numberInputHandler(textContent) {
 }
 
 (function numberButtons() {
-    const numbers = document.querySelectorAll("#number");
+    const numbers = document.querySelectorAll(".number");
     numbers.forEach(number => number.addEventListener('click', event => numberInputHandler(event.target.textContent)))
 })();
 
@@ -180,7 +180,8 @@ function backspaceInputHandler() {
 })();
 
 // Keyboard events
-document.addEventListener('keyup', event => {
+document.addEventListener('keydown', event => {
+    if (event.repeat) return;
     let key = event.key;
     if (/([0-9])/.test(key)) numberInputHandler(key);
     else {
