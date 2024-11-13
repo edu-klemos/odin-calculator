@@ -180,29 +180,44 @@ function backspaceInputHandler() {
 })();
 
 // Keyboard events
-// document.addEventListener('keyup', event => {
-//     let key = event.key;
-//     switch (key) {
-//         case 'Escape':
-//             document.querySelector('#clear').dispatchEvent(clickEvent);
-//             break;
-
-//         case 'Backspace':
-//             backSpace();
-//             break;
-
-//         case '.':
-//             break;
-
-//         case '+':
-//             break;  
-
-//         case '-':
-//             break;
-
-//         case '=':
-//             break;
-        
-                  
-//     }
-// });
+document.addEventListener('keyup', event => {
+    let key = event.key;
+    if (/([0-9])/.test(key)) numberInputHandler(key);
+    else {
+        switch (key) {
+            case 'Escape':
+                resetCalculator()
+                break;
+    
+            case 'Backspace':
+                backspaceInputHandler();
+                break;
+    
+            case '.':
+                dotInputHandler();
+                break;
+    
+            case '+':
+                operatorInputHandler("+");
+                break;  
+    
+            case '-':
+                operatorInputHandler("-");
+                break;
+    
+            case '*':
+                operatorInputHandler("x");
+                break;  
+    
+            case '/':
+                operatorInputHandler("÷");
+                break;
+    
+            case 'Enter':
+                equalInputHandler();
+                break;
+            
+                      
+        }
+    }  
+});
