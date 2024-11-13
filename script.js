@@ -1,4 +1,5 @@
 const MAX_NUMBER = 999999999;
+const MIN_NUMBER = -99999999;
 const MAX_LENGTH = 9;
 
 function add(a, b) { return a + b };
@@ -45,11 +46,15 @@ function verifyResult(result) {
     }
     if (result === Infinity) {
         resultValidation.invalid = true;
-        resultValidation.message = "Can't divide by 0";
+        resultValidation.message = "Divide by 0";
     }
     else if (result > MAX_NUMBER) {
         resultValidation.invalid = true;
-        resultValidation.message = "Max value exceeded";
+        resultValidation.message = "Max value";
+    }
+    else if (result < MIN_NUMBER) {
+        resultValidation.invalid = true;
+        resultValidation.message = "Min value";
     }
     return resultValidation;
 }
