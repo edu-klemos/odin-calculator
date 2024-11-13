@@ -1,48 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
-    <title>Calculator</title>
-</head>
-<body>
-    <div class="calculator">
-        <div class="display">0</div>
-        <div class="keys">
-            <div id="row">
-                <button id="clear">AC</button>
-                <button id="backspace">&#9003</button>
-                <button id="operator">÷</button>
-            </div>
-            <div id="row">
-                <button id="number">7</button>
-                <button id="number">8</button>
-                <button id="number">9</button>
-                <button id="operator">x</button>
-            </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+        <script src="script.js" defer></script>
+        <title>Calculator</title>
+    </head>
+    <body>
+        <div class="calculator">
+            <div class="display">0</div>
+            
+            <div class="keys">
+                <div class="key-row">
+                    <button id="clear">AC</button>
+                    <button id="backspace">&#9003</button>
+                    <button id="operator">÷</button>
+                </div>
+                
+                <div class="key-row">
+                    <button class="number">7</button>
+                    <button class="number">8</button>
+                    <button class="number">9</button>
+                    <button id="operator">x</button>
+                </div>
 
-            <div id="row">
-                <button id="number">4</button>
-                <button id="number">5</button>
-                <button id="number">6</button>
-                <button id="operator">-</button>
-            </div>
+                <div class="key-row">
+                    <button class="number">4</button>
+                    <button class="number">5</button>
+                    <button class="number">6</button>
+                    <button id="operator">-</button>
+                    
+                </div>
 
-            <div id="row">
-                <button id="number">1</button>
-                <button id="number">2</button>
-                <button id="number">3</button>
-                <button id="operator">+</button>
-            </div>
+                <div class="key-row">
+                    <button class="number">1</button>
+                    <button class="number">2</button>
+                    <button class="number">3</button>
+                    <button id="operator">+</button>
+                    
+                </div>
 
-            <div id="row">
-                <button id="number">0</button>
-                <button id="dot">.</button>
-                <button id="equal">=</button>
-            </div>            
+                <div class="key-row">
+                    <button class="number">0</button>
+                    <button id="dot">.</button>
+                    <button id="equal">=</button>
+                </div>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
