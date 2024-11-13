@@ -60,9 +60,15 @@ function verifyResult(result) {
 }
 
 function stopCalculator(message) {
+    highlightOperatorButton()
     const buttons = document.querySelectorAll("button");
-    buttons.forEach(button => button.disabled = true);
-    document.querySelector('#clear').disabled = false;
+    buttons.forEach(button => {
+        button.disabled = true;
+        button.classList.add('disabled-button');
+    });
+    const clearButton = document.querySelector('#clear')
+    clearButton.disabled = false;
+    clearButton.classList.remove('disabled-button');
     updateDisplay(message);
 }
 
@@ -92,7 +98,10 @@ function resetCalculator() {
     clearVariables();
     updateDisplay(0);
     const buttons = document.querySelectorAll("button");
-    buttons.forEach(button => button.disabled = false); //calculator will work again after stopCalculator()
+    buttons.forEach(button => { //calculator will work again after stopCalculator()
+        button.disabled = false;
+        button.classList.remove('disabled-button')
+    }); 
 }
 
 function updateDisplay(content) {

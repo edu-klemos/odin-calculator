@@ -81,4 +81,19 @@ button:active {
   color: #1D2433;
   width: 150px;
   background-color: #6390FA;
+  box-shadow: none;
+}
+
+#equal:hover, #clear:hover {
+  box-shadow: 0 0.1em .2em #CA5880;
+}
+
+#equal:active, #clear:active {
+  box-shadow: 0 0.1em .5em #CA5880;
+}
+
+
+.disabled-button {
+  box-shadow: none;
+  pointer-events: none;
 }
