@@ -122,7 +122,7 @@ function operatorInputHandler(textContent) {
         calculate();
     }
     firstNumber = getDisplayContent();
-    operator = textContent; 
+    operator = textContent;
 }
 
 (function operatorButtons() {
@@ -186,6 +186,7 @@ function backspaceInputHandler() {
 
 // Keyboard events
 document.addEventListener('keydown', event => {
+    document.activeElement.blur() //remove focus from the last button clicked
     if (event.repeat) return;
     let key = event.key;
     if (/([0-9])/.test(key)) numberInputHandler(key);
