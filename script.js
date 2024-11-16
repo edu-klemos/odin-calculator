@@ -2,6 +2,16 @@ const MAX_NUMBER = 999999999;
 const MIN_NUMBER = -99999999;
 const MAX_LENGTH = 9;
 
+const allButtons = document.querySelectorAll("button");
+const numberButtons = document.querySelectorAll(".number");
+const operatorButtons = document.querySelectorAll(".operator");
+const equalButton = document.querySelector('#equal');
+const clearButton = document.querySelector('#clear');
+const dotButton = document.querySelector('#dot');
+const backspaceButton = document.querySelector('#backspace');
+const display = document.querySelector('.display');
+
+
 function add(a, b) { return a + b };
 
 function subtract(a, b) { return a - b };
@@ -61,12 +71,10 @@ function verifyResult(result) {
 
 function stopCalculator(message) {
     highlightOperatorButton()
-    const buttons = document.querySelectorAll("button");
-    buttons.forEach(button => {
+    allButtons.forEach(button => {
         button.disabled = true;
         button.classList.add('disabled-button');
     });
-    const clearButton = document.querySelector('#clear')
     clearButton.disabled = false;
     clearButton.classList.remove('disabled-button');
     updateDisplay(message);
@@ -97,19 +105,15 @@ function clearVariables() {
 function resetCalculator() {
     clearVariables();
     updateDisplay(0);
-    const buttons = document.querySelectorAll("button");
-    buttons.forEach(button => { //calculator will work again after stopCalculator()
+    allButtons.forEach(button => { //calculator will work again after stopCalculator()
         button.disabled = false;
-        button.classList.remove('disabled-button')
+        button.classList.remove('disabled-button');
     }); 
 }
 
-function updateDisplay(content) {
-    const display = document.querySelector('.display');
-    display.textContent = content;
-}
+function updateDisplay(content) { display.textContent = content; }
 
-function getDisplayContent() { return document.querySelector('.display').textContent };
+function getDisplayContent() { return display.textContent; }
 
 function numberInputHandler(textContent) {
     if (firstNumber == false && textContent === '0') return; // firstNumber == false because it can be falsy values "" or "0"
@@ -122,9 +126,8 @@ function numberInputHandler(textContent) {
         updateDisplay(secondNumber || firstNumber);
 }
 
-(function numberButtons() {
-    const numbers = document.querySelectorAll(".number");
-    numbers.forEach(number => number.addEventListener('click', event => numberInputHandler(event.target.textContent)))
+(function addNumberButtons() {
+    numberButtons.forEach(numberButton => numberButton.addEventListener('click', event => numberInputHandler(event.target.textContent)))
 })();
 
 function operatorInputHandler(textContent, id) {
@@ -136,13 +139,13 @@ function operatorInputHandler(textContent, id) {
     highlightOperatorButton(id);
 }
 
-(function operatorButtons() {
-    const operations = document.querySelectorAll(".operator");
-    operations.forEach(operation => operation.addEventListener('click', event => operatorInputHandler(event.target.textContent, event.target.id)))
+(function addOperatorButtons() {
+    operatorButtons.forEach(operator => operator.addEventListener('click', event => operatorInputHandler(event.target.textContent, event.target.id)))
 })();
 
 function highlightOperatorButton(id = "") {
-    if (document.querySelector('.operator-in-use')) document.querySelector('.operator-in-use').classList.remove('operator-in-use');
+    const operatorButtonHighlighted = document.querySelector('.operator-in-use');
+    if (operatorButtonHighlighted) operatorButtonHighlighted.classList.remove('operator-in-use');
     if (id) document.querySelector(`#${id}`).classList.add('operator-in-use');
 }
 
@@ -152,9 +155,8 @@ function equalInputHandler() {
     }
 }
 
-(function equalButton() {
-    const equal = document.querySelector('#equal');
-    equal.addEventListener('click', equalInputHandler);
+(function addEqualButton() {
+    equalButton.addEventListener('click', equalInputHandler);
 })();
 
 function dotInputHandler() {
@@ -169,14 +171,13 @@ function dotInputHandler() {
     updateDisplay(secondNumber || firstNumber);
 }
 
-(function dotButton() {
-    const dot = document.querySelector('#dot');
-    dot.addEventListener('click', dotInputHandler);
+(function addDotButton() {
+    dotButton.addEventListener('click', dotInputHandler);
 })();
 
-(function clearButton() {
-    const clear = document.querySelector('#clear');
-    clear.addEventListener('click', resetCalculator);
+(function addClearButton() {
+    
+    clearButton.addEventListener('click', resetCalculator);
 })();
 
 function backspaceInputHandler() {
@@ -196,8 +197,8 @@ function backspaceInputHandler() {
     }
 }
 
-(function backspaceButton() {
-    const backspaceButton = document.querySelector('#backspace');
+(function addBackspaceButton() {
+    
     backspaceButton.addEventListener('click', backspaceInputHandler);
 })();
 
